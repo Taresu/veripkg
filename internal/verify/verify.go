@@ -12,7 +12,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/Taresu/auto-repo-package-integrity-checker/internal/sumsfile"
+	"github.com/Taresu/veripkg/internal/sumsfile"
 )
 
 // Tier is the trust level of a verification result, ordered weakest→strongest.

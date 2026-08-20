@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/Taresu/auto-repo-package-integrity-checker/internal/fetcher"
-	"github.com/Taresu/auto-repo-package-integrity-checker/internal/keystore"
+	"github.com/Taresu/veripkg/internal/fetcher"
+	"github.com/Taresu/veripkg/internal/keystore"
 )
 
 func keystoreDefault() string { return keystore.DefaultDir() }

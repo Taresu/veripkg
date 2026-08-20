@@ -12,7 +12,7 @@ import (
 	"strings"
 
 	"github.com/ProtonMail/go-crypto/openpgp"
-	"github.com/Taresu/auto-repo-package-integrity-checker/internal/pgp"
+	"github.com/Taresu/veripkg/internal/pgp"
 )
 
 // Store is a directory of trusted public keys, one file per key named by its

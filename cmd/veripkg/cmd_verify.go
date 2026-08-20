@@ -7,7 +7,7 @@ import (
 	"io"
 	"path/filepath"
 
-	"github.com/Taresu/auto-repo-package-integrity-checker/internal/manifest"
+	"github.com/Taresu/veripkg/internal/manifest"
 )
 
 func cmdVerify(args []string, stdout, stderr io.Writer) int {

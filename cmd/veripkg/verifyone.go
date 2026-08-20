@@ -6,12 +6,12 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/Taresu/auto-repo-package-integrity-checker/internal/fetcher"
-	"github.com/Taresu/auto-repo-package-integrity-checker/internal/hasher"
-	"github.com/Taresu/auto-repo-package-integrity-checker/internal/keystore"
-	"github.com/Taresu/auto-repo-package-integrity-checker/internal/pgp"
-	"github.com/Taresu/auto-repo-package-integrity-checker/internal/sumsfile"
-	"github.com/Taresu/auto-repo-package-integrity-checker/internal/verify"
+	"github.com/Taresu/veripkg/internal/fetcher"
+	"github.com/Taresu/veripkg/internal/hasher"
+	"github.com/Taresu/veripkg/internal/keystore"
+	"github.com/Taresu/veripkg/internal/pgp"
+	"github.com/Taresu/veripkg/internal/sumsfile"
+	"github.com/Taresu/veripkg/internal/verify"
 )
 
 // verifyInput fully describes one verification attempt.
