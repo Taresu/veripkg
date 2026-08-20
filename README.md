@@ -107,6 +107,23 @@ go build -o veripkg ./cmd/veripkg
 sudo mv veripkg /usr/local/bin/
 ```
 
+### Troubleshooting `go install`
+
+- **`veripkg: command not found` after `go install`** — the binary installed
+  fine, but Go's bin directory isn't on your `PATH`. It lives at
+  `$(go env GOPATH)/bin` (usually `~/go/bin`). Add it:
+
+  ```bash
+  echo 'export PATH="$PATH:$(go env GOPATH)/bin"' >> ~/.bashrc
+  source ~/.bashrc
+  veripkg version
+  ```
+
+- **`requires go >= 1.23.0; switching to go1.x`** — expected, not an error. Our
+  crypto dependencies require Go 1.23, so Go auto-manages a newer toolchain. To
+  avoid the download entirely, install Go 1.23+ or use a
+  [prebuilt release binary](https://github.com/Taresu/veripkg/releases).
+
 ## Usage
 
 ### Strongest: signed SHA256SUMS
