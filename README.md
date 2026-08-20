@@ -100,6 +100,9 @@ or install with Go:
 go install github.com/Taresu/veripkg/cmd/veripkg@latest
 ```
 
+> If `veripkg` then reports `command not found`, Go's bin directory isn't on your
+> `PATH` — see [Troubleshooting](#troubleshooting-go-install) just below.
+
 Or build from source:
 
 ```bash
