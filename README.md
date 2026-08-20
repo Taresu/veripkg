@@ -84,7 +84,14 @@ check does and does not prove is the point.
 ## Install
 
 Download the static binary for your architecture from
-[Releases](#), or build from source:
+[Releases](https://github.com/Taresu/auto-repo-package-integrity-checker/releases),
+or install with Go:
+
+```bash
+go install github.com/Taresu/auto-repo-package-integrity-checker/cmd/veripkg@latest
+```
+
+Or build from source:
 
 ```bash
 go build -o veripkg ./cmd/veripkg
