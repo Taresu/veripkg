@@ -77,7 +77,8 @@ check does and does not prove is the point.
   forever with a single idempotent command and a clean exit code.
 - **Runs everywhere, installs nothing** — a single static binary. No `gpg`, no
   Python, no runtime deps. Works the same on Debian, Ubuntu, Fedora, Arch,
-  Alpine, containers.
+  Alpine, containers, and macOS. Prebuilt for Linux (amd64/arm64/arm) and
+  macOS (amd64/arm64).
 
 ---
 
