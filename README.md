@@ -12,7 +12,6 @@ __     __ _____  ____   ___  ____   _  __  ____
 [![Latest release](https://img.shields.io/github/v/release/Taresu/veripkg?sort=semver)](https://github.com/Taresu/veripkg/releases/latest)
 [![Go Reference](https://pkg.go.dev/badge/github.com/Taresu/veripkg.svg)](https://pkg.go.dev/github.com/Taresu/veripkg)
 [![Go version](https://img.shields.io/github/go-mod/go-version/Taresu/veripkg)](https://go.dev/doc/install)
-[![Go Report Card](https://goreportcard.com/badge/github.com/Taresu/veripkg)](https://goreportcard.com/report/github.com/Taresu/veripkg)
 [![License: MIT](https://img.shields.io/github/license/Taresu/veripkg)](LICENSE)
 [![Platforms](https://img.shields.io/badge/platform-Linux%20%7C%20macOS-blue)](#platform-support)
 
@@ -96,10 +95,9 @@ check does and does not prove is the point.
   UNVERIFIED, because that's what it is.
 - **Repeatable & CI-friendly** — pin a verified file once, then re-check it
   forever with a single idempotent command and a clean exit code.
-- **Runs everywhere, installs nothing** — a single static binary. No `gpg`, no
-  Python, no runtime deps. Works the same on Debian, Ubuntu, Fedora, Arch,
-  Alpine, containers, and macOS. Prebuilt for Linux (amd64/arm64/arm) and
-  macOS (amd64/arm64).
+- **Runs everywhere, installs nothing** — a single static binary with no `gpg`,
+  no Python, and no runtime dependencies (details in
+  [Platform support](#platform-support)).
 
 ---
 
@@ -170,6 +168,9 @@ sudo mv veripkg /usr/local/bin/
   [prebuilt release binary](https://github.com/Taresu/veripkg/releases).
 
 ## Usage
+
+There are three ways to verify — strongest first — and veripkg always prints
+which tier you actually got.
 
 ### Strongest: signed SHA256SUMS
 
@@ -305,11 +306,13 @@ independently of the download page.
 
 ## How it works
 
-A single Go binary with small, independently-testable parts: `hasher`
+The design keeps the one security-critical decision isolated from everything
+else. It's a single Go binary of small, independently-testable parts: `hasher`
 (SHA-256), `sumsfile` (SHA256SUMS parsing), `pgp` (pure-Go OpenPGP signature
 checking), `keystore` (explicit trusted keys), `fetcher` (local/`file://`/https),
-`manifest` (pinned entries), and `verify` — the trust-tier decision logic, which
-is covered by dedicated tests for every path that can emit a VERIFIED result.
+and `manifest` (pinned entries) — all feeding `verify`, the **I/O-free trust-tier
+decision logic** at the core, which has dedicated tests for every path that can
+emit a VERIFIED result.
 
 ## License
 
