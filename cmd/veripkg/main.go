@@ -21,6 +21,14 @@ const (
 	exitRefused  = 2 // ran fine but could not verify: UNVERIFIED/refused
 )
 
+const banner = `
+__     __ _____  ____   ___  ____   _  __  ____
+\ \   / /| ____||  _ \ |_ _||  _ \ | |/ / / ___|
+ \ \ / / |  _|  | |_) | | | | |_) || ' /| |  _
+  \ V /  | |___ |  _ <  | | |  __/ | . \| |_| |
+   \_/   |_____||_| \_\|___||_|    |_|\_\ \____|
+`
+
 const usage = `veripkg — verify out-of-band downloads against a trusted source
 
 USAGE:
@@ -49,7 +57,7 @@ func main() {
 
 func run(args []string, stdout, stderr io.Writer) int {
 	if len(args) == 0 {
-		fmt.Fprint(stderr, usage)
+		fmt.Fprintf(stderr, "%s\n%s", banner, usage)
 		return exitError
 	}
 	cmd, rest := args[0], args[1:]
@@ -63,13 +71,15 @@ func run(args []string, stdout, stderr io.Writer) int {
 	case "keys":
 		return cmdKeys(rest, stdout, stderr)
 	case "version", "--version", "-v":
+		// Banner to stderr keeps stdout a clean, parseable version line.
+		fmt.Fprintf(stderr, "%s\n", banner)
 		fmt.Fprintf(stdout, "veripkg %s\n", version)
 		return exitVerified
 	case "help", "-h", "--help":
-		fmt.Fprint(stdout, usage)
+		fmt.Fprintf(stdout, "%s\n%s", banner, usage)
 		return exitVerified
 	default:
-		fmt.Fprintf(stderr, "unknown command %q\n\n%s", cmd, usage)
+		fmt.Fprintf(stderr, "%s\nunknown command %q\n\n%s", banner, cmd, usage)
 		return exitError
 	}
 }
