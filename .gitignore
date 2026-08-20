@@ -1,0 +1,10 @@
+# Build output
+/veripkg
+/dist/
+
+# Local config / manifests generated during use
+veripkg.json
+
+# Editor / OS cruft
+*.swp
+.DS_Store
