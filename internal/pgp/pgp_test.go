@@ -3,6 +3,7 @@ package pgp
 import (
 	"bytes"
 	"testing"
+	"time"
 
 	"github.com/ProtonMail/go-crypto/openpgp"
 )
@@ -82,5 +83,39 @@ func TestVerifyDetachedWrongKey(t *testing.T) {
 func TestVerifyDetachedNoKeys(t *testing.T) {
 	if _, err := VerifyDetached(Keyring{}, []byte("x"), []byte("y")); err == nil {
 		t.Fatal("expected failure with empty keyring")
+	}
+}
+
+// TestVerifyDetachedSubkeySignature locks in the real-world case (observed with
+// HashiCorp Terraform): the signature is made by a dedicated *signing subkey*,
+// not the primary key. Verification must still succeed against a keyring holding
+// the primary, and must report the PRIMARY fingerprint — that's the identity a
+// user trusts with `trust-key` and requires via `--key`.
+func TestVerifyDetachedSubkeySignature(t *testing.T) {
+	e := newTestEntity(t)
+	if err := e.AddSigningSubkey(nil); err != nil {
+		t.Fatal(err)
+	}
+
+	// Sanity: ArmoredDetachSign will pick a signing subkey over the primary, so
+	// confirm the chosen signing key is actually a subkey (different key id).
+	sk, ok := e.SigningKey(time.Now())
+	if !ok {
+		t.Fatal("no signing key selected")
+	}
+	if sk.PublicKey.KeyId == e.PrimaryKey.KeyId {
+		t.Fatal("expected signing to use a subkey, but the primary was selected")
+	}
+
+	kr := pubKeyring(t, e)
+	msg := []byte("SHA256SUMS content signed by a subkey\n")
+	sig := signDetached(t, e, msg)
+
+	fpr, err := VerifyDetached(kr, msg, sig)
+	if err != nil {
+		t.Fatalf("subkey signature should verify: %v", err)
+	}
+	if want := Fingerprint(e.PrimaryKey.Fingerprint); fpr != want {
+		t.Fatalf("fingerprint = %q, want primary %q", fpr, want)
 	}
 }
