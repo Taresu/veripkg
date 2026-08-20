@@ -69,7 +69,7 @@ func TestTierProperties(t *testing.T) {
 	if TierUnverified.OK() {
 		t.Error("unverified must not report OK")
 	}
-	if !(TierSigned > TierPinnedHash && TierPinnedHash > TierUnverified) {
+	if TierSigned <= TierPinnedHash || TierPinnedHash <= TierUnverified {
 		t.Error("tier ordering wrong")
 	}
 }

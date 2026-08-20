@@ -67,13 +67,19 @@ func (s *Store) Trust(keyData []byte) ([]string, error) {
 	return added, nil
 }
 
-func (s *Store) writeEntity(fpr string, e *openpgp.Entity) error {
+func (s *Store) writeEntity(fpr string, e *openpgp.Entity) (err error) {
 	path := filepath.Join(s.dir, fpr+".asc")
 	f, err := os.OpenFile(path, os.O_CREATE|os.O_TRUNC|os.O_WRONLY, 0o644)
 	if err != nil {
 		return err
 	}
-	defer f.Close()
+	// A failed Close on a file we just wrote can mean data wasn't flushed, so
+	// surface it (unless an earlier error already took precedence).
+	defer func() {
+		if cerr := f.Close(); cerr != nil && err == nil {
+			err = cerr
+		}
+	}()
 	w, err := armorEncoder(f)
 	if err != nil {
 		return err

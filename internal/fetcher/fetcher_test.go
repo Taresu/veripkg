@@ -28,7 +28,7 @@ func TestFetchLocalPathAndFileURL(t *testing.T) {
 
 func TestFetchHTTP(t *testing.T) {
 	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("remote-sums"))
+		_, _ = w.Write([]byte("remote-sums"))
 	}))
 	defer srv.Close()
 
