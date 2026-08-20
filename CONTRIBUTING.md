@@ -16,6 +16,11 @@ gofmt -w .            # format (CI fails on any unformatted file)
 Before opening a PR, make sure all of these pass. CI runs `gofmt` (as a check),
 `go vet`, and `go test -race`.
 
+> **`go install` PATH gotcha:** if you install the CLI (`go install ./cmd/veripkg`
+> or `...@latest`) and hit `veripkg: command not found`, Go's bin directory isn't
+> on your `PATH`. Add it: `export PATH="$PATH:$(go env GOPATH)/bin"` (persist it in
+> your shell rc). See the README's Troubleshooting section for details.
+
 ## The rule that matters most
 
 `veripkg` must **never report a `VERIFIED` tier unless the expected value came

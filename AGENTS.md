@@ -15,6 +15,9 @@ go vet ./... && gofmt -l .           # must be clean; gofmt -w . to fix
 CI runs `gofmt` (fails on any unformatted file), `go vet`, and `go test -race`.
 Match that locally before proposing changes.
 
+If you `go install ./cmd/veripkg` (or `...@latest`) and the `veripkg` command is
+not found, Go's bin dir isn't on `PATH`: `export PATH="$PATH:$(go env GOPATH)/bin"`.
+
 ## The one invariant you must not weaken
 
 `veripkg` verifies files downloaded **outside** the package manager and reports a
