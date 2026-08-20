@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	"github.com/ProtonMail/go-crypto/openpgp"
-	"github.com/tsalada/veripkg/internal/hasher"
+	"github.com/Taresu/auto-repo-package-integrity-checker/internal/hasher"
 )
 
 // fixture builds a self-contained signed-download scenario in a temp dir:

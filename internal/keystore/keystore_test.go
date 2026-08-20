@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/ProtonMail/go-crypto/openpgp"
-	"github.com/tsalada/veripkg/internal/pgp"
+	"github.com/Taresu/auto-repo-package-integrity-checker/internal/pgp"
 )
 
 func testPubKey(t *testing.T) ([]byte, string) {

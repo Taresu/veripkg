@@ -7,7 +7,7 @@ import (
 	"io"
 	"path/filepath"
 
-	"github.com/tsalada/veripkg/internal/manifest"
+	"github.com/Taresu/auto-repo-package-integrity-checker/internal/manifest"
 )
 
 // cmdPin verifies a file and, only if it passes, records it in the manifest so

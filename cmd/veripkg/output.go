@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/tsalada/veripkg/internal/verify"
+	"github.com/Taresu/auto-repo-package-integrity-checker/internal/verify"
 )
 
 // resultJSON is the stable machine-readable shape of a verification result.

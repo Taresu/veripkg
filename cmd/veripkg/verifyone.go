@@ -6,12 +6,12 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/tsalada/veripkg/internal/fetcher"
-	"github.com/tsalada/veripkg/internal/hasher"
-	"github.com/tsalada/veripkg/internal/keystore"
-	"github.com/tsalada/veripkg/internal/pgp"
-	"github.com/tsalada/veripkg/internal/sumsfile"
-	"github.com/tsalada/veripkg/internal/verify"
+	"github.com/Taresu/auto-repo-package-integrity-checker/internal/fetcher"
+	"github.com/Taresu/auto-repo-package-integrity-checker/internal/hasher"
+	"github.com/Taresu/auto-repo-package-integrity-checker/internal/keystore"
+	"github.com/Taresu/auto-repo-package-integrity-checker/internal/pgp"
+	"github.com/Taresu/auto-repo-package-integrity-checker/internal/sumsfile"
+	"github.com/Taresu/auto-repo-package-integrity-checker/internal/verify"
 )
 
 // verifyInput fully describes one verification attempt.

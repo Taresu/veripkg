@@ -1,4 +1,4 @@
-module github.com/tsalada/veripkg
+module github.com/Taresu/auto-repo-package-integrity-checker
 
 go 1.23.0
 

@@ -3,7 +3,7 @@ package verify
 import (
 	"testing"
 
-	"github.com/tsalada/veripkg/internal/sumsfile"
+	"github.com/Taresu/auto-repo-package-integrity-checker/internal/sumsfile"
 )
 
 const (
