@@ -84,11 +84,11 @@ check does and does not prove is the point.
 ## Install
 
 Download the static binary for your architecture from
-[Releases](https://github.com/Taresu/auto-repo-package-integrity-checker/releases),
+[Releases](https://github.com/Taresu/veripkg/releases),
 or install with Go:
 
 ```bash
-go install github.com/Taresu/auto-repo-package-integrity-checker/cmd/veripkg@latest
+go install github.com/Taresu/veripkg/cmd/veripkg@latest
 ```
 
 Or build from source:
