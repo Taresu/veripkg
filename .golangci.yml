@@ -1,0 +1,14 @@
+# golangci-lint configuration (v2).
+# Runs the default linter set (errcheck, govet, ineffassign, staticcheck, unused).
+version: "2"
+
+linters:
+  settings:
+    errcheck:
+      # Writes to stdout/stderr for CLI output: a failed write is not actionable
+      # and handling it everywhere would only add noise. Resource Close/Write
+      # errors are still checked and handled in code.
+      exclude-functions:
+        - fmt.Fprint
+        - fmt.Fprintf
+        - fmt.Fprintln
