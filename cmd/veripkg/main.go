@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"runtime/debug"
 )
 
 // Exit codes form part of the tool's contract (scripts/CI depend on them).
@@ -49,7 +50,21 @@ TRUST TIERS (printed on every verification):
     UNVERIFIED               no independent trusted source — treated as failure
 `
 
-var version = "0.1.0-dev"
+// version is injected at release time via -ldflags "-X main.version=vX.Y.Z".
+// When empty (plain `go build`/`go install`), resolveVersion falls back to the
+// module version embedded in the binary's build info, so `go install ...@vX.Y.Z`
+// still reports the real version instead of a placeholder.
+var version = ""
+
+func resolveVersion() string {
+	if version != "" {
+		return version
+	}
+	if info, ok := debug.ReadBuildInfo(); ok && info.Main.Version != "" {
+		return info.Main.Version // e.g. "v0.1.3" for go install, "(devel)" locally
+	}
+	return "(devel)"
+}
 
 func main() {
 	os.Exit(run(os.Args[1:], os.Stdout, os.Stderr))
@@ -73,7 +88,7 @@ func run(args []string, stdout, stderr io.Writer) int {
 	case "version", "--version", "-v":
 		// Banner to stderr keeps stdout a clean, parseable version line.
 		fmt.Fprintf(stderr, "%s\n", banner)
-		fmt.Fprintf(stdout, "veripkg %s\n", version)
+		fmt.Fprintf(stdout, "veripkg %s\n", resolveVersion())
 		return exitVerified
 	case "help", "-h", "--help":
 		fmt.Fprintf(stdout, "%s\n%s", banner, usage)
