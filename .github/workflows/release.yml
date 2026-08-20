@@ -1,0 +1,45 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write # required to create the GitHub release
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+
+      - name: Test
+        run: go test ./...
+
+      - name: Build static binaries
+        env:
+          CGO_ENABLED: "0"
+          TAG: ${{ github.ref_name }}
+        run: |
+          mkdir -p dist
+          for target in linux/amd64 linux/arm64; do
+            GOOS=${target%/*} GOARCH=${target#*/}
+            export GOOS GOARCH
+            out="veripkg_${TAG}_${GOOS}_${GOARCH}"
+            go build -trimpath -ldflags "-s -w -X main.version=${TAG}" -o "dist/${out}" ./cmd/veripkg
+          done
+          ( cd dist && sha256sum veripkg_* > SHA256SUMS )
+
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          gh release create "$TAG" \
+            --title "$TAG" \
+            --generate-notes \
+            dist/veripkg_* dist/SHA256SUMS
