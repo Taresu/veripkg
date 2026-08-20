@@ -8,6 +8,14 @@ __     __ _____  ____   ___  ____   _  __  ____
 
 # veripkg
 
+[![CI](https://github.com/Taresu/veripkg/actions/workflows/ci.yml/badge.svg)](https://github.com/Taresu/veripkg/actions/workflows/ci.yml)
+[![Latest release](https://img.shields.io/github/v/release/Taresu/veripkg?sort=semver)](https://github.com/Taresu/veripkg/releases/latest)
+[![Go Reference](https://pkg.go.dev/badge/github.com/Taresu/veripkg.svg)](https://pkg.go.dev/github.com/Taresu/veripkg)
+[![Go version](https://img.shields.io/github/go-mod/go-version/Taresu/veripkg)](https://go.dev/doc/install)
+[![Go Report Card](https://goreportcard.com/badge/github.com/Taresu/veripkg)](https://goreportcard.com/report/github.com/Taresu/veripkg)
+[![License: MIT](https://img.shields.io/github/license/Taresu/veripkg)](LICENSE)
+[![Platforms](https://img.shields.io/badge/platform-Linux%20%7C%20macOS-blue)](#platform-support)
+
 **Verify the files you download by hand — before you run them as root.**
 
 `veripkg` is a small, dependency-free CLI that checks a downloaded file
@@ -16,6 +24,11 @@ expected value, and tells you *honestly* how much that check is worth.
 
 It exists to close one specific, real gap — and it refuses to lie to you about
 the rest.
+
+**Contents:** [Why it matters](#why-this-matters-the-honest-version) ·
+[Trust tiers](#trust-tiers--printed-on-every-run) ·
+[Requirements](#requirements) · [Platform support](#platform-support) ·
+[Install](#install) · [Usage](#usage) · [FAQ](#faq)
 
 ---
 
@@ -87,6 +100,35 @@ check does and does not prove is the point.
   Python, no runtime deps. Works the same on Debian, Ubuntu, Fedora, Arch,
   Alpine, containers, and macOS. Prebuilt for Linux (amd64/arm64/arm) and
   macOS (amd64/arm64).
+
+---
+
+## Requirements
+
+- **Just running it — nothing.** `veripkg` is a single static binary with no
+  runtime dependencies. In particular, **no [GnuPG](https://gnupg.org/) install
+  is required** — OpenPGP signature verification is built in. Grab a
+  [prebuilt binary](https://github.com/Taresu/veripkg/releases) and run it.
+- **Installing with `go install` or building from source —**
+  [Go](https://go.dev/doc/install) **1.23 or newer**
+  ([downloads](https://go.dev/dl/)), required by the crypto dependencies.
+- **Optional, for the examples —** [`curl`](https://curl.se/docs/) or `wget` to
+  fetch files, checksums, and keys.
+
+## Platform support
+
+The binaries are **pure-Go and statically linked** (`CGO_ENABLED=0`), so a single
+Linux binary is **not tied to any base distribution** — the same file runs on
+glibc- and musl-based systems alike, and in minimal containers with no libc.
+
+| OS | Architectures | Notes |
+|----|---------------|-------|
+| **Linux** | `amd64`, `arm64`, `arm` (v7) | Distro-agnostic: Debian/Ubuntu, Fedora/RHEL, Arch, and Alpine (musl) all run the same static binary. |
+| **macOS** | `amd64` (Intel), `arm64` (Apple Silicon) | |
+| **Windows** | — | Not built (out of scope for now). |
+
+Prebuilt binaries for every row above are attached to each
+[release](https://github.com/Taresu/veripkg/releases).
 
 ---
 
