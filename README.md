@@ -116,6 +116,34 @@ veripkg verify app-1.2.3.tar.gz \
 # ✓ VERIFIED (signed)  app-1.2.3.tar.gz
 ```
 
+#### Worked example: HashiCorp Terraform
+
+A real, reproducible run. Terraform publishes a GPG-signed `SHA256SUMS`, signed
+by HashiCorp's release **subkey** under their published primary key:
+
+```bash
+V=1.9.8 ; B=https://releases.hashicorp.com/terraform/$V
+
+# Trust HashiCorp's key once (confirm the fingerprint at hashicorp.com/security).
+curl -sO https://www.hashicorp.com/.well-known/pgp-key.txt
+veripkg trust-key pgp-key.txt
+# → trusted key C874011F0AB405110D02105534365D9472D7468F
+
+curl -sO $B/terraform_${V}_linux_amd64.zip
+curl -sO $B/terraform_${V}_SHA256SUMS
+curl -sO $B/terraform_${V}_SHA256SUMS.sig
+
+veripkg verify terraform_${V}_linux_amd64.zip \
+  --sums terraform_${V}_SHA256SUMS \
+  --sig  terraform_${V}_SHA256SUMS.sig \
+  --key  C874011F0AB405110D02105534365D9472D7468F
+# ✓ VERIFIED (signed)  terraform_1.9.8_linux_amd64.zip
+#     matched signed sums (key C874011F0AB405110D02105534365D9472D7468F)
+```
+
+Change one byte of the zip and the same command exits `2` with a hash mismatch —
+the check is real, not decorative.
+
 ### Fallback: pinned hash (e.g. the ProtonVPN case)
 
 When upstream only prints a bare hash (no signed sums), record it as a pin. Get
